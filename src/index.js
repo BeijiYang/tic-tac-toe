@@ -2,15 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-// class Square extends React.Component {
-//   render() {
-//     return (
-//       <button className="square" onClick={() => this.props.onClick()}>
-//         {this.props.value}
-//       </button>
-//     );
-//   }
-// }
 function Square(props) {
   return (
     <button className="square" onClick={props.onClick}>
@@ -23,13 +14,6 @@ function Square(props) {
 
 
 class Board extends React.Component {
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     squares: Array(9).fill(null),
-  //     xIsNext: true,
-  //   };
-  // }
 
   renderSquare(i) {
     return <Square
@@ -40,25 +24,6 @@ class Board extends React.Component {
 
 
   render() {
-
-    // let test = this.state.squares.slice().map((item, i) => {
-    //     return(
-    //       <li key={i}>
-    //         {i} : {item ? item : "null"}
-    //       </li>
-    //       )
-    //     }
-    // )
-
-    // const status = 'Next player: ' + (this.state.xIsNext ? "X" : "O");
-    // console.log(this.props.squares);
-    // const winner = calculateWinner(this.state.squares);
-    // let status;
-    // if (winner) {
-    //   status = 'Winner: ' + winner;
-    // } else {
-    //   status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-    // }
 
     return (
       <div>
@@ -97,15 +62,11 @@ class Game extends React.Component {
       }],
       xIsNext: true,
       stepNumber: 0,
-      // historyLocation:[],
+      historyLocation:[],
     };
   }
 
   calculateWinner(squares) {
-    // const history=this.state.history;
-    // const current=history[this.state.stepNumber];
-    // const SPSPsquares=current.squares;
-
     const lines = [
       [0, 1, 2],
       [3, 4, 5],
@@ -133,15 +94,20 @@ class Game extends React.Component {
 
 
   handleClick(i) {
-    // const history = this.state.history;
+    //按小格子的数字代号存储的历史
     const copyHistory = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = copyHistory[copyHistory.length - 1];
     const squares = current.squares.slice();
 
+    //按坐标系存储的历史。之所以下面这一句不需要跟上面一样“+ 1”，是因为第0步时，上一种记录方式的初始状态是[object]，对象里是一个数组[null,...,null]，而这种是空的[]。
+    const historyLocation = this.state.historyLocation.slice(0, this.state.stepNumber);
+    historyLocation.push(this.convert(i));
+
+
+    //ignore the click if someone has already won the game or if a square is already filled
     if (this.calculateWinner(squares) || squares[i]) {
       return;
     }
-    //ignore the click if someone has already won the game or if a square is already filled
 
     squares[i] = this.state.xIsNext ? "X" : "O";
 
@@ -151,10 +117,12 @@ class Game extends React.Component {
       }]),
       stepNumber: copyHistory.length,
       xIsNext: !this.state.xIsNext,
+      historyLocation: historyLocation,
     });
   }
 
   jumpTo(step){
+
     this.setState({
       stepNumber: step,
       // xIsNext: (step%2 === 0) ? true : false ,
@@ -162,24 +130,39 @@ class Game extends React.Component {
     });
   }
 
+  convert(i){
+    var x=Math.floor(i/3)+1;
+    var y=0;
+    if((i+1)%3===0){
+        y=3;
+    }else{
+        y=(i+1)%3;
+    }
+    return [x,y];
+  }
+
+  // reverse(moves){
+  //   console.log(moves.reverse());
+  //   return moves.reverse();
+  // }
+
+
   render() {
     const history = this.state.history;
-    // const current = history[history.length - 1];
     const current = history[this.state.stepNumber];
     const winner = this.calculateWinner(current.squares);
+    const coordinate = this.state.historyLocation.slice();
 
-    // console.log(history.length);
-    // console.log(this.state.stepNumber);
-    // console.log("current.squares:"+current.squares);
+// console.log(history);
 
     const moves = history.map((step,move) => {
       const desc = move ?
-       "Move# :" + move :
+       "Move#" + move + "   (" + coordinate[move - 1] + ")" :
       "Game Start";
       console.log(desc);
       return(
         <li key={move}>
-          <a href="#" onClick={() => this.jumpTo(move)}>{desc}</a>
+          <a href="#" ref="entry" onClick={() => this.jumpTo(move)}>{desc}</a>
         </li>
       );
     });
@@ -191,6 +174,7 @@ class Game extends React.Component {
       status = "Next player: " + (this.state.xIsNext ? "X" : "O")
     }
 
+
     return (
       <div className="game">
         <div className="game-board">
@@ -201,6 +185,7 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
+          {/* <button onClick={() => this.reverse(moves)}>reverse</button> */}
           <ol>{moves}</ol>
         </div>
       </div>
@@ -214,28 +199,3 @@ ReactDOM.render(
   <Game />,
   document.getElementById('root')
 );
-
-//calculateWinner
-// function calculateWinner(squares) {
-//   // const history=this.state.history;
-//   // const lastHistory=history[this.state.stepNumber];
-//   // const squares=lastHistory.squares;
-//
-//   const lines = [
-//     [0, 1, 2],
-//     [3, 4, 5],
-//     [6, 7, 8],
-//     [0, 3, 6],
-//     [1, 4, 7],
-//     [2, 5, 8],
-//     [0, 4, 8],
-//     [2, 4, 6],
-//   ];
-//   for (let i = 0; i < lines.length; i++) {
-//     const [a, b, c] = lines[i];
-//     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-//       return squares[a];
-//     }
-//   }
-//   return null;
-// }
