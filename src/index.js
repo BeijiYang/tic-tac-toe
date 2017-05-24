@@ -122,6 +122,12 @@ class Game extends React.Component {
         return squares[a];
       }
     }
+
+    const filled = squares.filter((item) => (item != null)).length;
+    if(filled === 9) {
+      return "NOBODY"
+    }
+
     return null;
   }
 
