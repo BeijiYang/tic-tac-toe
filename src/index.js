@@ -134,7 +134,7 @@ class Game extends React.Component {
       "Game Start";
       console.log(desc);
       return(
-        <li >
+        <li key={move}>
           <a href="#">{desc}</a>
         </li>
       );
