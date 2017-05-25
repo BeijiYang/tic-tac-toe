@@ -49,6 +49,6 @@ ol, ul {
   margin-left: 20px;
 }
 
-/*.bold {
-  color: green;
-}*/
+.bold {
+  color: orange;
+}
