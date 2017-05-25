@@ -91,7 +91,7 @@ class Game extends React.Component {
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
       if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-        console.log(lines[i]);
+        // console.log(lines[i]);
         return [squares[a],lines[i]];
       }
     }
@@ -165,14 +165,45 @@ class Game extends React.Component {
     const winner = this.calculateWinner(current.squares)[0];
     const winCase = this.calculateWinner(current.squares)[1];
     const coordinate = this.state.historyLocation.slice();
-    console.log("winCase:"+winCase);
-// console.log(history);
+    const reversedHistory = history.slice().reverse();
+    const reversedCoordinate = coordinate.slice().reverse();
+    // const historyArr
+    // console.log("winCase:"+winCase);
+    // console.log(history);
+    // console.log(reversedHistory);
+    // console.log("positive");
+    // console.log(coordinate);
+    // console.log("coordinate[-1]:   "+coordinate[-1]);
+    // console.log("coordinate[0]:    "+coordinate[0]);
+    // console.log("coordinate[1]:    "+coordinate[1]);
+    // console.log("negative");
+    // console.log(reversedCoordinate);
+    // console.log("reversedCoordinate[-1]:   "+reversedCoordinate[-1]);
+    // console.log("reversedCoordinate[0]:    "+reversedCoordinate[0]);
+    // console.log("reversedCoordinate[1]:    "+reversedCoordinate[1]);
 
     const moves = history.map((step,move) => {
+      // console.log(step);
+      // console.log(move);
       const desc = move ?
        "Move#" + move + "   (" + coordinate[move - 1] + ")" :
       "Game Start";
-      console.log(desc);
+      // console.log(desc);
+      return(
+        <li key={move}>
+          <a href="#" ref="entry" onClick={() => this.jumpTo(move)}>{desc}</a>
+        </li>
+      );
+    });
+
+    const reversedMoves =reversedHistory.map((step,move) => {
+      // console.log(step);
+      // console.log(move
+      const reversedMove = reversedHistory.length-1 - move; //[0,1,2,3,4] => [4,3,2,1,0]
+      const desc = (reversedMove) ?
+      "Move#" + (reversedMove) + "   (" + reversedCoordinate[move] + ")" :
+      "Game Start";
+
       return(
         <li key={move}>
           <a href="#" ref="entry" onClick={() => this.jumpTo(move)}>{desc}</a>
@@ -201,6 +232,7 @@ class Game extends React.Component {
           <div>{status}</div>
           {/* <button onClick={() => this.reverse(moves)}>reverse</button> */}
           <ol>{moves}</ol>
+            <ol>{reversedMoves}</ol>
         </div>
       </div>
     );
