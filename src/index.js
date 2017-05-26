@@ -165,6 +165,13 @@ class Game extends React.Component {
   //   return moves.reverse();
   // }
 
+  reset() {
+    this.setState({
+      stepNumber: 0,
+      xIsNext: true ,
+      history: this.state.history.slice(0,1),
+    });
+  }
 
   render() {
     const history = this.state.history;
@@ -204,8 +211,7 @@ class Game extends React.Component {
     });
 
     const reversedMoves =reversedHistory.map((step,move) => {
-      // console.log(step);
-      // console.log(move
+
       const reversedMove = reversedHistory.length-1 - move; //[0,1,2,3,4] => [4,3,2,1,0]
       const desc = (reversedMove) ?
       "Move#" + (reversedMove) + "   (" + reversedCoordinate[move] + ")" :
@@ -238,6 +244,7 @@ class Game extends React.Component {
         <div className="game-info">
           <div>{status}</div>
           <button onClick={() => this.toggleSortingOrder()}>reverse</button>
+          <button onClick={() => this.reset()}>reset</button>
           {
             this.state.ascendingOrder ?
             <ol>{moves}</ol> :
