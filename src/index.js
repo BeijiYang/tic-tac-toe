@@ -61,8 +61,6 @@ class Board extends React.Component {
   }
 }
 
-
-
 //Game
 class Game extends React.Component {
   constructor() {
@@ -76,6 +74,7 @@ class Game extends React.Component {
       historyLocation:[],
       ascendingOrder: true,
     };
+    // this.jumpTo = this.jumpTo.bind(this);
   }
 
   calculateWinner(squares) {
@@ -134,8 +133,27 @@ class Game extends React.Component {
     });
   }
 
-  jumpTo(step){
+  jumpTo(step,e){
+    console.log(e.target);
+    // console.log(e.target.parentNode);
+    // console.log(e.target.parentNode.parentNode);
+    const lists = e.target.parentNode.parentNode.childNodes;
+    for(let i=0; i<lists.length; i++) {
+      // console.log("opopopop"+ i);
+      const item = lists[i];
 
+
+      if(item.childNodes[0].classList.contains('square')){
+        console.log("bug!");
+        continue;
+      }
+
+      if(item.childNodes[0].classList.contains('back-active')){
+          item.childNodes[0].classList.remove('back-active');
+      }
+
+          e.target.classList.add('back-active');
+    };
     this.setState({
       stepNumber: step,
       // xIsNext: (step%2 === 0) ? true : false ,
@@ -158,12 +176,7 @@ class Game extends React.Component {
     this.setState({
       ascendingOrder: !this.state.ascendingOrder,
     });
-    // console.log(this.state.ascendingOrder);
   }
-  // reverse(moves){
-  //   console.log(moves.reverse());
-  //   return moves.reverse();
-  // }
 
   reset() {
     this.setState({
@@ -196,16 +209,13 @@ class Game extends React.Component {
     // console.log("reversedCoordinate[0]:    "+reversedCoordinate[0]);
     // console.log("reversedCoordinate[1]:    "+reversedCoordinate[1]);
 
-    const moves = history.map((step,move) => {
-      // console.log(step);
-      // console.log(move);
+    const moves = history.slice().map((step,move) => {
       const desc = move ?
        "Move#" + move + "   (" + coordinate[move - 1] + ")" :
       "Game Start";
-      // console.log(desc);
       return(
         <li key={move}>
-          <a href="#" ref="entry" onClick={() => this.jumpTo(move)}>{desc}</a>
+          <a href="#" className={move} ref="entry" onClick={this.jumpTo.bind(this,move,event)}>{desc}</a>
         </li>
       );
     });
@@ -219,7 +229,7 @@ class Game extends React.Component {
 
       return(
         <li key={move}>
-          <a href="#" ref="entry" onClick={() => this.jumpTo(move)}>{desc}</a>
+          <a href="#" ref="entry" onClick={this.jumpTo.bind(this,move,event)}>{desc}</a>
         </li>
       );
     });

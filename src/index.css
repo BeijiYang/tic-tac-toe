@@ -52,3 +52,7 @@ ol, ul {
 .bold {
   color: orange;
 }
+
+.back-active {
+  color: red;
+}
