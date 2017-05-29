@@ -134,7 +134,9 @@ class Game extends React.Component {
   }
 
   jumpTo(step,e){
+    // console.log("e.target");
     console.log(e.target);
+    // console.log("refs");
     // console.log(this.refs.entrying);
     // console.log(e.target.parentNode);
     // console.log(e.target.parentNode.parentNode);
@@ -214,7 +216,7 @@ class Game extends React.Component {
       "Game Start";
       return(
         <li key={move}>
-          <a href="#" className={move} ref="entrying" onClick={this.jumpTo.bind(this,move)}>{desc}</a>
+          <a href="#" className={move} ref="entry" onClick={this.jumpTo.bind(this,move)}>{desc}</a>
         </li>
       );
     });
@@ -228,7 +230,7 @@ class Game extends React.Component {
 
       return(
         <li key={move}>
-          <a href="#" ref="entry" onClick={this.jumpTo.bind(this,move,event)}>{desc}</a>
+          <a href="#" ref="entry" onClick={this.jumpTo.bind(this,move)}>{desc}</a>
         </li>
       );
     });
