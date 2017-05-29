@@ -135,23 +135,22 @@ class Game extends React.Component {
 
   jumpTo(step,e){
     console.log(e.target);
+    // console.log(this.refs.entrying);
     // console.log(e.target.parentNode);
     // console.log(e.target.parentNode.parentNode);
+
+
     const lists = e.target.parentNode.parentNode.childNodes;
     for(let i=0; i<lists.length; i++) {
-      // console.log("opopopop"+ i);
       const item = lists[i];
-
-
-      if(item.childNodes[0].classList.contains('square')){
-        console.log("bug!");
-        continue;
-      }
+      item.childNodes[0]
 
       if(item.childNodes[0].classList.contains('back-active')){
           item.childNodes[0].classList.remove('back-active');
       }
-
+      // if(item.childNodes[0].classList.contains('square')){
+      //   continue;
+      // }
           e.target.classList.add('back-active');
     };
     this.setState({
@@ -215,7 +214,7 @@ class Game extends React.Component {
       "Game Start";
       return(
         <li key={move}>
-          <a href="#" className={move} ref="entry" onClick={this.jumpTo.bind(this,move,event)}>{desc}</a>
+          <a href="#" className={move} ref="entrying" onClick={this.jumpTo.bind(this,move)}>{desc}</a>
         </li>
       );
     });
