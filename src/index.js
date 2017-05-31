@@ -283,9 +283,9 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <button onClick={() => this.toggleSortingOrder()}>reverse</button>
-          <button onClick={() => this.reset()}>reset</button>
-          <button onClick={() => this.callAI(current.squares)}>AI</button>
+          <button className="menu" onClick={() => this.toggleSortingOrder()}>reverse</button>
+          <button className="menu" onClick={() => this.reset()}>reset</button>
+          <button className="menu" id="AI" onClick={() => this.callAI(current.squares)}>AI</button>
           {
             this.state.ascendingOrder ?
             <ol>{moves}</ol> :

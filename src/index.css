@@ -56,3 +56,18 @@ ol, ul {
 .back-active {
   color: hsl(120,65%,75%);
 }
+
+#AI {
+  display: block;
+  margin: auto;
+  width: 98%;
+  color: #FFEB3B;
+  font-weight: bold;
+  background-color: #009688;
+}
+.menu {
+  background-color: #009688;
+  margin: 2px;
+  border: 3px solid #00796B;
+  color: lightgrey;
+}
