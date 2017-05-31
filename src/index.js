@@ -226,8 +226,8 @@ class Game extends React.Component {
     const reversedHistory = history.slice().reverse();
     const reversedCoordinate = coordinate.slice().reverse();
     // console.log("winCase:"+winCase);
-    console.log(history);
-    console.log(reversedHistory);
+    // console.log(history);
+    // console.log(reversedHistory);
     // console.log("positive");
     // console.log(coordinate);
     // console.log("coordinate[-1]:   "+coordinate[-1]);
@@ -241,7 +241,7 @@ class Game extends React.Component {
 
     const moves = history.slice().map((step,move) => {
       const desc = move ?
-       "Move#" + move + "   (" + coordinate[move - 1] + ")" :
+      "Move#" + move + "   (" + coordinate[move - 1] + ")" :
       "Game Start";
       return(
         <li key={move}>
