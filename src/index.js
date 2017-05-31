@@ -135,18 +135,11 @@ class Game extends React.Component {
   }
 
   jumpTo(step,e){
-    // console.log("e.target");
-    console.log(e.target);
-    // console.log("refs");
-    // console.log(this.refs.entrying);
-    // console.log(e.target.parentNode);
-    // console.log(e.target.parentNode.parentNode);
-
-
+    //高亮当前选中项
+    // console.log(e.target);
     const lists = e.target.parentNode.parentNode.childNodes;
     for(let i=0; i<lists.length; i++) {
       const item = lists[i];
-      item.childNodes[0]
 
       if(item.childNodes[0].classList.contains('back-active')){
           item.childNodes[0].classList.remove('back-active');
@@ -156,6 +149,8 @@ class Game extends React.Component {
       // }
           e.target.classList.add('back-active');
     };
+
+    //穿越
     this.setState({
       stepNumber: step,
       // xIsNext: (step%2 === 0) ? true : false ,
@@ -191,7 +186,7 @@ class Game extends React.Component {
   callAI(currentSquares) {
     const idCheck = this.state.xIsNext;
     let aiMove = AI(currentSquares,idCheck);
-    console.log(aiMove);
+    // console.log(aiMove);
 
     //按小格子的数字代号存储的历史
     const copyHistory = this.state.history.slice(0, this.state.stepNumber + 1);
@@ -230,10 +225,9 @@ class Game extends React.Component {
     const coordinate = this.state.historyLocation.slice();
     const reversedHistory = history.slice().reverse();
     const reversedCoordinate = coordinate.slice().reverse();
-    // const historyArr
     // console.log("winCase:"+winCase);
-    // console.log(history);
-    // console.log(reversedHistory);
+    console.log(history);
+    console.log(reversedHistory);
     // console.log("positive");
     // console.log(coordinate);
     // console.log("coordinate[-1]:   "+coordinate[-1]);
@@ -265,7 +259,7 @@ class Game extends React.Component {
 
       return(
         <li key={move}>
-          <a href="#" ref="entry" onClick={this.jumpTo.bind(this,move)}>{desc}</a>
+          <a href="#" ref="entry" onClick={this.jumpTo.bind(this,reversedMove)}>{desc}</a>
         </li>
       );
     });

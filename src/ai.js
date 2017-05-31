@@ -5,10 +5,8 @@ function ai(arr,idCheck) {
         if(item===null){
             return index;
         }
-    }).filter(function(item){
-        return item!==undefined;
-    });
-    console.log(loacation);
+    }).filter( item => (item !== undefined));
+    // console.log(loacation);
 
     const oCalc={};
 
@@ -30,6 +28,7 @@ function ai(arr,idCheck) {
             case 4:
               oCalc['loacation'+index.toString()]=judgeCenter(index);
               break;
+            default:
         }
     }
 
@@ -40,17 +39,13 @@ function ai(arr,idCheck) {
       switch (index) {
         case 0:
         return conner(1,2,3,6,4,8);
-
         case 2:
         return conner(0,1,5,8,4,6);
-
         case 6:
         return conner(0,3,7,8,2,4);
-
         case 8:
         return conner(2,5,6,7,0,4);
 
-          break;
         default:
       }
     }
@@ -58,17 +53,12 @@ function ai(arr,idCheck) {
       switch (index) {
         case 1:
         return side(4,7,0,2);
-
         case 3:
         return side(0,6,4,5);
-
         case 5:
         return side(2,8,3,4);
-
         case 7:
         return side(6,8,1,4);
-
-          break;
         default:
       }
     }
@@ -126,12 +116,12 @@ function ai(arr,idCheck) {
 
     for(const item in oCalc){
         if(oCalc[item]>largest.value){
-            largest.index=parseInt(item.replace('loacation',''));
+            largest.index=parseInt(item.replace('loacation',''),10);
             largest.value=oCalc[item];
         }
     }
 
-    console.log([player,JSON.stringify(largest)]);
+    // console.log([player,JSON.stringify(largest)]);
 
     return largest.index;
   }
